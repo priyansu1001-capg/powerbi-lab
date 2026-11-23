@@ -153,15 +153,28 @@ table financials
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'First Characters'
+		dataType: string
+		lineageTag: 3d1152e3-60dc-41d8-9628-18c5ac1bba15
+		summarizeBy: none
+		sourceColumn: First Characters
+
+		annotation SummarizationSetBy = Automatic
+
 	partition financials = m
 		mode: import
 		source =
 				let
 				 Source = Excel.Workbook(File.Contents("C:\Program Files\WindowsApps\Microsoft.MicrosoftPowerBIDesktop_2.159.1231.0_x64__8wekyb3d8bbwe\bin\SampleData\Financial Sample.xlsx"), null, true),
 				    financials_Table = Source{[Item="financials",Kind="Table"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(financials_Table,{{"Segment", type text}, {"Country", type text}, {"Product", type text}, {"Discount Band", type text}, {"Units Sold", type number}, {"Manufacturing Price", Int64.Type}, {"Sale Price", Int64.Type}, {"Gross Sales", type number}, {"Discounts", type number}, {"Sales", type number}, {"COGS", type number}, {"Profit", type number}, {"Date", type date}, {"Month Number", Int64.Type}, {"Month Name", type text}, {"Year", Int64.Type}})
+				    #"Changed Type" = Table.TransformColumnTypes(financials_Table,{{"Segment", type text}, {"Country", type text}, {"Product", type text}, {"Discount Band", type text}, {"Units Sold", type number}, {"Manufacturing Price", Int64.Type}, {"Sale Price", Int64.Type}, {"Gross Sales", type number}, {"Discounts", type number}, {"Sales", type number}, {"COGS", type number}, {"Profit", type number}, {"Date", type date}, {"Month Number", Int64.Type}, {"Month Name", type text}, {"Year", Int64.Type}}),
+				    #"Duplicated Column" = Table.AddColumn(#"Changed Type", "Month Name - Copy", each [Month Name], type text),
+				    #"Removed Columns" = Table.RemoveColumns(#"Duplicated Column",{"Month Name - Copy"}),
+				    #"Inserted First Characters" = Table.AddColumn(#"Removed Columns", "First Characters", each Text.Start([Month Name], 3), type text)
 				in
-				 #"Changed Type"
+				    #"Inserted First Characters"
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
 
