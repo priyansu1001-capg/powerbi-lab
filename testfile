@@ -1,1 +1,250 @@
-added random things
+Create a polished, 16:9 PowerPoint presentation about the “mainProject 1” accident analytics report.
+
+Create exactly 10 slides. Use a professional safety-dashboard design:
+- Dark blue, teal, white, and orange accents
+- Large KPI cards
+- Clean charts with data labels
+- Minimal text
+- Consistent page titles and slide numbering
+- One clear takeaway per slide
+- Professional but easy-to-understand language
+- Suitable for a management, government, or transport-safety audience
+- Do not invent numbers, trends, locations, or insights
+
+Use the following report context:
+
+DATASET
+- Main table: accident data
+- One accident record per row
+- Date table: Calendar
+- Accident Date is related to Calendar[Date] in a many-to-one relationship
+- 144,419 current-period accidents
+- 195,737 current-period casualties
+- 516,260 previous-period accidents
+- 700,831 previous-period casualties
+
+MEASURES
+1. CY Casualties
+   - TOTALYTD(SUM(Number_of_Casualties), Calendar[Date])
+   - Format: whole number
+2. PY Casualties
+   - CALCULATE(SUM(Number_of_Casualties), SAMEPERIODLASTYEAR(Calendar[Date]))
+3. YoY Casualties
+   - ([CY Casualties] - [PY Casualties]) / [PY Casualties]
+4. CY Accidents
+   - TOTALYTD(COUNT(accident data[Index]), Calendar[Date])
+   - Format: whole number
+5. PY Accidents
+   - CALCULATE(COUNT(accident data[Index]), SAMEPERIODLASTYEAR(Calendar[Date]))
+6. YoY Accidents
+   - ([CY Accidents] - [PY Accidents]) / [PY Accidents]
+
+ANALYSIS DIMENSIONS
+- Accident severity
+- Vehicle type
+- District area
+- Road surface conditions
+- Light conditions
+- Weather conditions
+- Urban or rural area
+- Accident date and calendar year
+- Latitude and longitude for possible geographic analysis
+
+KPI OUTCOMES
+- Current-period accidents: 144,419
+- Previous-period accidents: 516,260
+- Accident year-over-year change: approximately -72.03%
+- Current-period casualties: 195,737
+- Previous-period casualties: 700,831
+- Casualty year-over-year change: approximately -72.07%
+- Present these values exactly as period-based measures unless the report clearly contains a year filter
+
+SLIDE PLAN
+
+Slide 1: Title
+Title: “Road Accident and Casualty Performance”
+Subtitle: “Power BI Dashboard Analysis”
+Include report name “mainProject 1”
+Add a subtitle: “Current period, previous period, severity, vehicles, locations, and conditions”
+Add a short three-line executive-summary box
+
+Slide 2: Report Overview
+Explain:
+- Purpose: understand accident volumes, casualties, and contributing conditions
+- Data source: accident data
+- Analysis period: controlled by the Power BI date filter
+- Measures: current-period accidents, casualties, previous-period comparison, and year-over-year change
+Include a visual methodology flow:
+Data → Calendar relationship → DAX measures → Dashboard analysis → Safety conclusions
+
+Slide 3: Executive KPI Snapshot
+Create four large KPI cards:
+- CY Accidents: 144,419
+- PY Accidents: 516,260
+- YoY Accidents: -72.03%
+- CY Casualties: 195,737
+Add PY Casualties: 700,831 and YoY Casualties: -72.07% in a footer or comparison panel
+Explain that the result is period-dependent because it uses TOTALYTD and SAMEPERIODLASTYEAR
+Outcome:
+- Both accident and casualty volumes decline sharply in the selected period
+- Casualties decline slightly more than accidents
+- Report the change consistently and avoid calling the change an annual decline without a visible year filter
+
+Slide 4: Accident Severity Analysis
+Use a bar chart or stacked bar chart:
+- Slight: 124,093 accidents, 165,837 casualties
+- Serious: 18,777 accidents, 27,045 casualties
+- Fatal: 1,549 accidents, 2,855 casualties
+Add the accident share:
+- Slight: approximately 85.93%
+- Serious: approximately 13.00%
+- Fatal: approximately 1.07%
+Outcome:
+- Slight accidents make up most accident volume
+- Fatal accidents are rare but carry higher casualty severity per event
+- Prevention work should target both high-volume slight accidents and high-severity fatal accidents
+- Do not imply that all slight accidents are minor in every safety context
+
+Slide 5: Vehicle-Type Analysis
+Use a horizontal bar chart for current-period accidents:
+- Cars: 114,606
+- Bikes: 11,826
+- Vans: 11,659
+- Buses: 4,932
+- Others: 1,097
+- Agricultural: 299
+Add casualties where useful:
+- Cars: 155,804
+- Vans: 15,905
+- Bikes: 15,610
+- Buses: 6,573
+- Others: 1,446
+- Agricultural: 399
+Outcome:
+- Cars account for approximately 79.36% of accidents
+- Cars account for approximately 79.59% of casualties
+- Bikes, vans, and buses are the most important non-car vehicle groups
+- Prioritize car safety campaigns and targeted protection for vulnerable or commercial road users
+- Avoid treating accident frequency as proof of vehicle design risk without exposure data
+
+Slide 6: Road-Surface Conditions
+Use a bar or donut chart:
+- Dry: 98,684 accidents
+- Wet: 35,808 accidents
+- Snow/Ice: 9,762 accidents
+- Blank or unspecified: 165 accidents
+Show approximate shares:
+- Dry: 68.33%
+- Wet: 24.79%
+- Snow/Ice: 6.76%
+- Blank: 0.11%
+Outcome:
+- Most accidents occur on dry roads
+- The dry-road concentration reflects the largest possible exposure category
+- Wet and snow/ice conditions still require targeted treatment
+- Do not claim dry roads are more dangerous per journey or per vehicle mile
+- Recommend road drainage, surface maintenance, speed management, and seasonal warnings
+
+Slide 7: Weather and Light Conditions
+Use two side-by-side charts.
+
+Weather:
+- Fine: 117,021 accidents
+- Rainy: 16,335 accidents
+- Snow/Fog: 4,109 accidents
+- Other: 6,954 accidents
+Approximate shares:
+- Fine: 81.03%
+- Rainy: 11.31%
+- Snow/Fog: 2.85%
+- Other: 4.82%
+
+Light:
+- Day: 107,768 accidents
+- Dark: 36,651 accidents
+Approximate shares:
+- Day: 74.62%
+- Dark: 25.38%
+
+Outcome:
+- Most accidents occur in fine weather and daylight
+- Exposure is likely higher during these conditions, but no exposure data is included
+- Rain, snow/fog, or darkness remain meaningful risk periods
+- Recommended actions: lighting upgrades, visibility controls, weather alerts, and wet-weather driving campaigns
+
+Slide 8: Urban and Rural Areas
+Use two columns or a clustered bar chart:
+- Urban accidents: 93,994
+- Urban casualties: 121,251
+- Rural accidents: 50,425
+- Rural casualties: 74,486
+Show approximate shares:
+- Urban accidents: 65.08%
+- Rural accidents: 34.92%
+- Urban casualties: 61.95%
+- Rural casualties: 38.05%
+Outcome:
+- Urban areas account for most accidents and casualties
+- Higher urban totals may reflect population and traffic exposure
+- Rural accidents may involve fewer people but higher-severity travel environments
+- Compare crash rates rather than raw totals before setting priorities
+- Recommended actions: urban junction safety and rural speed, road, and route safety programs
+
+Slide 9: Highest-Volume District Areas
+Create a ranked horizontal bar chart or ranked table using the available district figures.
+Visible high-volume areas include:
+- Birmingham: 2,876
+- Leeds: 1,954
+- Sheffield: 1,295
+- Bradford: 1,439
+- Liverpool: 1,334
+- Westminster: 1,421
+- Manchester: 1,425
+- Cornwall: 1,414
+- Lambeth: 1,106
+- Cheshire East: 1,111
+- County Durham: 1,173
+- Barnet: 1,207
+- Kirklees: 1,088
+- Bristol, City of: 1,087
+- Nottingham: 952
+- Leicester: 977
+- Southwark: 1,002
+- Doncaster: 945
+- Cheshire West and Chester: 949
+- Croydon: 916
+Birmingham should be visually highlighted.
+Outcome:
+- Birmingham has the highest listed volume
+- District totals vary substantially
+- Use raw totals for hotspot identification, then normalize by population or traffic exposure for resource allocation
+- Add a map-style visual if the presentation tool supports it
+- Do not describe these district values as the complete national ranking unless the report confirms complete coverage
+
+Slide 10: Conclusion and Action Plan
+Create a clear executive conclusion with four sections:
+1. Overall performance
+   - Accidents and casualties decline sharply in the selected period
+   - Confirm that YoY comparisons use consistent date selections
+2. Where accidents concentrate
+   - Slight-severity accidents
+   - Cars and bikes
+   - Urban locations
+   - Dry, fine-weather, and daylight conditions
+3. Where intervention matters
+   - High-volume locations such as Birmingham
+   - Wet, snow/ice, and low-light conditions
+   - Vulnerable road users
+   - Junction and route safety
+4. Recommended next steps
+   - Normalize totals by population, traffic volume, and road exposure
+   - Compare accident rate and casualty rate, not only count
+   - Investigate severity and location combinations
+   - Create a quarterly action plan
+   - Add targets for accident and casualty reduction
+Finish with one bold conclusion:
+“Accident and casualty totals are declining in the selected period, but volume concentration shows clear priorities for location-specific and condition-specific prevention.”
+
+Do not include unsupported assumptions or causal claims. Clearly label totals by accident count or casualty count. Keep charts readable and use no more than six categories in a single chart. Include one short takeaway under every chart or KPI section.
+
+Use the model measures and values above to build the complete presentation. Make the slide content concise, with a maximum of five short bullets per slide. Use the report name “mainProject 1” once or twice at most
