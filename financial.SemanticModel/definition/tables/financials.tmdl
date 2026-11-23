@@ -161,6 +161,15 @@ table financials
 
 		annotation SummarizationSetBy = Automatic
 
+	column Length
+		dataType: int64
+		formatString: 0
+		lineageTag: 2247ea4f-ab72-480b-b39a-b09d9b78ed32
+		summarizeBy: sum
+		sourceColumn: Length
+
+		annotation SummarizationSetBy = Automatic
+
 	partition financials = m
 		mode: import
 		source =
@@ -170,9 +179,10 @@ table financials
 				    #"Changed Type" = Table.TransformColumnTypes(financials_Table,{{"Segment", type text}, {"Country", type text}, {"Product", type text}, {"Discount Band", type text}, {"Units Sold", type number}, {"Manufacturing Price", Int64.Type}, {"Sale Price", Int64.Type}, {"Gross Sales", type number}, {"Discounts", type number}, {"Sales", type number}, {"COGS", type number}, {"Profit", type number}, {"Date", type date}, {"Month Number", Int64.Type}, {"Month Name", type text}, {"Year", Int64.Type}}),
 				    #"Duplicated Column" = Table.AddColumn(#"Changed Type", "Month Name - Copy", each [Month Name], type text),
 				    #"Removed Columns" = Table.RemoveColumns(#"Duplicated Column",{"Month Name - Copy"}),
-				    #"Inserted First Characters" = Table.AddColumn(#"Removed Columns", "First Characters", each Text.Start([Month Name], 3), type text)
+				    #"Inserted First Characters" = Table.AddColumn(#"Removed Columns", "First Characters", each Text.Start([Month Name], 3), type text),
+				    #"Inserted Text Length" = Table.AddColumn(#"Inserted First Characters", "Length", each Text.Length([Segment]), Int64.Type)
 				in
-				    #"Inserted First Characters"
+				    #"Inserted Text Length"
 
 	annotation PBI_ResultType = Table
 
